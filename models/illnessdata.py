@@ -2,7 +2,6 @@ from django.db import models
 from datetime import datetime
 
 
-
 class IllnessData(models.Model):
     breath_frequency = models.DecimalField(max_digits=5, decimal_places=2)
     hear_rate = models.DecimalField(max_digits=5, decimal_places=2)
