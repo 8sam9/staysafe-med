@@ -7,6 +7,18 @@ from staysafemed.models import (
 )
 
 
+class IllnessDataInline(admin.TabularInline):
+    model = IllnessData
+    extra = 0
+    classes = ['collapse']
+
+
+class PatientAdmin(admin.ModelAdmin):
+    inlines = [
+        IllnessDataInline
+    ]
+
+
 class DoctorAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
@@ -16,7 +28,7 @@ class DoctorAdmin(admin.ModelAdmin):
 admin.site.register(IllnessStatus)
 admin.site.register(Hospital)
 admin.site.register(Doctor, DoctorAdmin)
-admin.site.register(Patient)
+admin.site.register(Patient, PatientAdmin)
 admin.site.register(HospitalHasPatient)
 admin.site.register(IllnessStatusHasPatient)
 admin.site.register(PatientOTP)

@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from .patient import Patient
 
 
 class IllnessData(models.Model):
@@ -8,10 +9,13 @@ class IllnessData(models.Model):
     systolic_pressure = models.DecimalField(max_digits=5, decimal_places=2)
     body_temperature = models.DecimalField(max_digits=5, decimal_places=2)
     notes = models.TextField(blank=True)
-    date = models.DateField()
     date_create = models.DateTimeField(default=datetime.utcnow)
     date_update = models.DateTimeField(auto_now=datetime.utcnow)
-    date_delete = models.DateTimeField()
+    date_delete = models.DateTimeField(blank=True, null=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return 'Patient: {} {}'.format(
+            self.patient.ssn,
+            self.date_create
+            )

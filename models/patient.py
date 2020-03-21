@@ -3,7 +3,6 @@ from django.db import models
 from .doctor import Doctor
 from .illnessstatus import IllnessStatus
 from .hospital import Hospital
-from .illnessdata import IllnessData
 
 
 class Patient(models.Model):
@@ -12,7 +11,6 @@ class Patient(models.Model):
     mobile_number_2 = models.CharField(max_length=30, blank=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     illness_status = models.ManyToManyField(IllnessStatus, through='IllnessStatusHasPatient') # noqa
-    illness_data = models.ManyToManyField(IllnessData)
 
     def __str__(self):
         return self.ssn
@@ -24,9 +22,10 @@ class IllnessStatusHasPatient(models.Model):
     date_update = models.DateTimeField(auto_now=datetime.utcnow)
 
     def __str__(self):
-        return 'Patient: {} - Status: {}'.format(
+        return 'Patient: {} - Status: {} - Date: {}'.format(
             self.patient.ssn,
-            self.illness_status.get_illnessStatus_display()
+            self.illness_status.get_illnessStatus_display(),
+            self.date_update
         )
 
 
