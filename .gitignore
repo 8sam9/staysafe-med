@@ -1,0 +1,15 @@
+.project
+.pydevproject
+__pycache__/*
+migrations/__pycache__/*
+*node_modules
+.idea/
+npm-debug.log
+*.sass-cache
+.vscode/
+*.pyc
+.DS_Store
+node_modules/
+.vagrant/
+jsconfig.json
+
