@@ -17,3 +17,9 @@ class PatientOTP(models.Model):
     date_issued = models.DateTimeField(default=datetime.utcnow)
     date_expire = models.DateTimeField(default=expireDate)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'OTP: {} - Patient: {}'.format(
+            self.otp,
+            self.patient.ssn
+        )

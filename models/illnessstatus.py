@@ -9,3 +9,6 @@ class IllnessStatus(models.Model):
         ],
         unique=True
     )
+
+    def __str__(self):
+        return self.get_illnessStatus_display()
