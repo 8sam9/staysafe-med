@@ -27,3 +27,14 @@ footer a{
 footer a:hover{
     color: #008281;
 }
+
+.btn-submit{
+    background:#00c4c3;
+    border:none;
+}
+.btn-submit:hover{
+    background:#008281;
+}
+.privacy_policy{
+    margin-top:40px;
+}
