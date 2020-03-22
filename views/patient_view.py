@@ -13,6 +13,7 @@ def validateOTP(func):
     def validatePatientOTP(self, request, *args, **kwargs):
         try:
             patient_otp = PatientOTP.objects.get(otp=kwargs['otp'])
+            kwargs['patientOTP'] = patient_otp
         except PatientOTP.DoesNotExist:      
             raise Http404("No matches the given query.")  
         return func(self, request, *args, **kwargs)
@@ -26,8 +27,11 @@ class PatientView(View):
 
     @validateOTP
     def get(self, request, *args, **kwargs):
-        return render(request, self.template, {'form': IllnessDataForm})   
+        patient_otp = kwargs['patientOTP']
+        patient = Patient.objects.get(pk=patient_otp.patient.id)    
+        return render(request, self.template, {'form': IllnessDataForm, 'patient': patient})
 
+    @validateOTP       
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
