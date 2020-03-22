@@ -4,7 +4,7 @@
 
     <input class="form-control" id="SearchPatientInput" type="text" placeholder="Cerca paziente..">
     <br>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" id="patientsTable">
         <thead>
         <tr>
             <th>SSN</th>
@@ -32,6 +32,11 @@
 
 </div>
 
+
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" >
+
 <script>
     $(document).ready(function(){
         $("#SearchPatientInput").on("keyup", function() {
@@ -40,14 +45,19 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
+
+
+        $('#patientsTable').DataTable({
+            "order": [[ 2, "desc" ]],
+            "searching":false,
+            "paging":false,
+            "info": false
+        });
+        $('.dataTables_length').addClass('bs-select');
+
     });
+
+
+
 </script>
 
-<style>
-    .margin-top{
-        margin-top:100px;
-    }
-    .info-patient-icon{
-        color: #5d9e9f;
-    }
-</style>

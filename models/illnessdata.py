@@ -6,10 +6,6 @@ from django.conf import settings
 from .patient import Patient
 
 
-LC = settings.LANGUAGE_CODE
-LC_ALL = '{}_{}.UTF-8'.format(LC.lower(), LC.upper())
-
-
 class IllnessData(models.Model):
     breath_frequency = models.IntegerField()
     heart_rate = models.IntegerField()
@@ -24,7 +20,6 @@ class IllnessData(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
     def __str__(self):
-        locale.setlocale(locale.LC_ALL, LC_ALL)
         return 'Patient: {} - {}'.format(
             self.patient.ssn,
             self.date_create.astimezone().strftime('%c')
