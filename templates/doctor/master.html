@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,7 +9,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+   <!-- fallback for old browsers -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    <!-- iconfont kit -->
+    <script src="https://kit.fontawesome.com/4b6b6397c0.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" >
+
 
 </head>
 <body class="bg-light">
@@ -20,20 +27,11 @@
 {% endblock %}
 
 <footer>
+    <p>Proudly offered by the Discovery Development Team: Mirko Arena, Samuele Macchi, Obou Brissy, Brian Suarez, Filippo Vezzali, Mirko Cappai</p>
+    <a href="#"> Per aiuto sulla piattaforma contattare Mirko Arena</a>
 </footer>
 
-<style>
-    .header{
-        width: 100%;
-        height: 60px;
-        text-align: center;
-        background: #5e9e9f;
-        color: white;
-        font-size: 25px;
-        line-height: 60px;
 
-    }
-</style>
 </body>
 </html>
 
