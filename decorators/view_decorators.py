@@ -12,7 +12,7 @@ def validateOTP(func):
             kwargs['patientOTP'] = patient_otp
         except PatientOTP.DoesNotExist:
             raise Http404("No matches the given query.")  
-        return func(self, request, *args, **kwargs)
+        return func(request, *args, **kwargs)
 
     return validatePatientOTP
 
