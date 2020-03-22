@@ -5,7 +5,9 @@ from django.utils.decorators import method_decorator
 from staysafemed.forms.illnessdata_form import IllnessDataForm 
 from staysafemed.models.patient import Patient
 from staysafemed.models.patient_otp import PatientOTP
+from staysafemed.models.illnessdata import IllnessData
 from functools import wraps
+
 
 ## to be moved 
 def validateOTP(func):
@@ -14,11 +16,12 @@ def validateOTP(func):
         try:
             patient_otp = PatientOTP.objects.get(otp=kwargs['otp'])
             kwargs['patientOTP'] = patient_otp
-        except PatientOTP.DoesNotExist:      
+        except PatientOTP.DoesNotExist:
             raise Http404("No matches the given query.")  
         return func(self, request, *args, **kwargs)
 
     return validatePatientOTP
+
 
 class PatientView(View): 
     form_class = IllnessDataForm
@@ -33,9 +36,10 @@ class PatientView(View):
 
     @validateOTP       
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        illnessData = IllnessData(patient=kwargs['patientOTP'].patient)
+        form = self.form_class(request.POST, instance=illnessData)
         if form.is_valid():
-            # <process form cleaned data>          
+            form.save()
             return render(request, self.template_success, {'form': form})
 
         return render(request, self.template, {'form': form})
