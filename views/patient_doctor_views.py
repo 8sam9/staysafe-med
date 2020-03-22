@@ -2,7 +2,7 @@ from django.views import generic
 from django.shortcuts import render
 from django.http import Http404
 from staysafemed.models.patient import Patient
-
+from staysafemed.models.illnessdata import IllnessData
 
 class PatientsDoctorListView(generic.ListView):
     model = Patient
@@ -18,10 +18,11 @@ class PatientDoctorDetailView(generic.View):
 
     def get(self, request, *args, **kwargs):
         try: 
-            patient = Patient.objects.get(pk=kwargs['id'])    
+            patient = Patient.objects.get(pk=kwargs['id'])
         except Patient.DoesNotExist:
             raise Http404("No matches the given query.")
-
+        illnessdata = IllnessData.objects.all().filter(patient=patient.id)
+        print(illnessdata)
         return render(request, self.template, {'patient': patient})
 
 

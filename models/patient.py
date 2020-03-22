@@ -12,6 +12,8 @@ LC_ALL = '{}_{}.UTF-8'.format(LC.lower(), LC.upper())
 
 class Patient(models.Model):
     ssn = models.CharField(max_length=45, unique=True)
+    first_name = models.CharField(max_length=30, default='')
+    last_name = models.CharField(max_length=30, default='')
     mobile_number_1 = models.CharField(max_length=30, blank=True)
     mobile_number_2 = models.CharField(max_length=30, blank=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
