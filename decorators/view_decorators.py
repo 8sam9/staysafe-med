@@ -6,7 +6,7 @@ from staysafemed.models.patient_otp import PatientOTP
 
 def validateOTP(func):
     @wraps(func)
-    def validatePatientOTP(self, request, *args, **kwargs):
+    def validatePatientOTP(request, *args, **kwargs):
         try:
             patient_otp = PatientOTP.objects.get(otp=kwargs['otp'])
             kwargs['patientOTP'] = patient_otp
