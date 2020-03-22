@@ -2,12 +2,8 @@
 {% load widget_tweaks %}
 
 {% block content %}
-
-
-<div class="container margin-top">
-    {% include 'doctor/partials/add_patient_button.html' %}
-    {% include 'doctor/partials/patients_list.html' with patients=patientsList  %}
-
-</div>
-
+    <div class="container margin-top">
+        {% include 'doctor/partials/add_patient_button.html' %}
+        {% include 'doctor/partials/patients_list.html' with patients=patientsList  %}
+    </div>
 {% endblock %}

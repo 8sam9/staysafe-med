@@ -2,17 +2,44 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <h1>Paziente</h1>
-    {{ patient.ssn }}
-    <br><br>
-    <h2> Illness Data </h2>
-    {% if illnessdata is not None %}
-        {% for illnessdatarecord in illnessdata %}
-            {{ illnessdatarecord.breath_frequency }}
-            <br>
-            {{ illnessdatarecord.heart_rate }}
-            <br>
-            ....
-        {% endfor %}
-    {% endif %}    
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col">
+                <h1>Paziente: {{ patient.patientFullName }}</h1>
+                <h3 class="mb-4">SSN: {{ patient.ssn }}</h3>
+                <h5>Dati del paziente:</h5>
+                {% if illnessdata is not None %}
+                    <table class="table table-bordered table-striped" id="patientsTable">
+                        <thead>
+                            <tr>
+                                <th>Frequenza<br> Respiro</th>
+                                <th>Frequenza<br> Cardiaca</th>
+                                <th>Pressione<br> Sistolica</th>
+                                <th>Temperatura<br> Corporea</th>
+                                <th>Saturazione<br> Ossigeno</th>
+                                <th>Score</th>
+                                <th>Data ora</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody id="PatientList">
+                            {% for illnessdatarecord in illnessdata %}
+                                <tr>
+                                    <td>{{ illnessdatarecord.breath_frequency }}</td>
+                                    <td>{{ illnessdatarecord.heart_rate }}</td>
+                                    <td>{{ illnessdatarecord.systolic_pressure }}</td>
+                                    <td>{{ illnessdatarecord.body_temperature }}</td>
+                                    <td>{{ illnessdatarecord.oxygen_saturation }}</td>
+                                    <td>{{ illnessdatarecord.mews_score }}</td>
+                                    <td>{{ illnessdatarecord.date_create }}</td>
+                                    <td></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}  
