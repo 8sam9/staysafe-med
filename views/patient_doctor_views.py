@@ -7,7 +7,7 @@ from staysafemed.models.patient import Patient
 class PatientsDoctorListView(generic.ListView):
     model = Patient
     context_object_name = 'patientsList'
-    template_name = 'doctor/patients_list.html'
+    template_name = 'doctor/dashboard.html'
 
     def get_queryset(self):
         return sorted(Patient.objects.all(), key=lambda p: p.lastIllnessDataScore, reverse=True)
