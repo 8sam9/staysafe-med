@@ -1,13 +1,8 @@
-import locale
 from django.utils import timezone
 from django.db import models
-from django.conf import settings
 from .doctor import Doctor
 from .illnessstatus import IllnessStatus
 from .hospital import Hospital
-
-LC = settings.LANGUAGE_CODE
-LC_ALL = '{}_{}.UTF-8'.format(LC.lower(), LC.upper())
 
 
 class Patient(models.Model):
@@ -33,7 +28,8 @@ class Patient(models.Model):
 
     @property
     def currentPatientOTP(self):
-        return self.patientotp.all().last()
+        return self.patientotp_set.all().last()
+
 
 class PatientInHospital(models.Model):
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)

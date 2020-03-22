@@ -1,6 +1,5 @@
 from functools import wraps
 from django.http import Http404
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from staysafemed.models.patient_otp import PatientOTP
 
