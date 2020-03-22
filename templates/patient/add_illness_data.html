@@ -1,7 +1,10 @@
-{% include "patient/header.html" %}
+{% extends 'patient/master.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
 <div class="container">
-    <div class="py-5 text-center">
-        <h4 class="mb-3">Buongiorno {{patient.ssn}}</h4>
+    <div class="pt-5 pb-4 text-center">
+        <h4 class="mt-4 mb-4">Buongiorno {{patient.ssn}}</h4>
         <h1>Inserisci i tuoi valori</h1>
     </div>
     <div class="row justify-content-center">
@@ -25,9 +28,39 @@
                         <button type="submit" class="btn btn-lg btn-block btn-success">Invia al medico</button>
                     </form>
                     -->
+
+                    {% if messages %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                {% for message in messages %}
+                                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}" role="alert">{{ message }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
                     <form action="" method="POST">
                         {% csrf_token %}
-                        {{ form }}
+                        <div class="form-group">
+                            <label for="{{ form.breath_frequency.id_for_label }}">Frequenza respiratoria</label>
+                            {{ form.breath_frequency | add_class:"form-control" }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.heart_rate.id_for_label }}">Frequenza cardiaca</label>
+                            {{ form.heart_rate | add_class:"form-control" }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.systolic_pressure.id_for_label }}">Pressione sistolica</label>
+                            {{ form.systolic_pressure | add_class:"form-control" }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.body_temperature.id_for_label }}">Temperatura corporea</label>
+                            {{ form.body_temperature | add_class:"form-control" }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.oxygen_saturation.id_for_label }}">Saturazione ossigeno</label>
+                            {{ form.oxygen_saturation | add_class:"form-control" }}
+                        </div>
                         <p><strong>Inviando questi dati dichiaro di rinunciare alla mia privacy in una situazione di emergenza</strong></p>
                         <input type="submit" value="Submit" class="btn btn-lg btn-block btn-success">
                     </form>
@@ -37,4 +70,4 @@
     </div>
 </div>
 
-{% include "patient/footer.html" %}
+{% endblock %}
