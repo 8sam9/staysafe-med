@@ -1,13 +1,30 @@
 from django.views import View
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import Http404
+from django.utils.decorators import method_decorator
 from staysafemed.forms.illnessdata_form import IllnessDataForm 
+from staysafemed.models.patient import Patient
+from staysafemed.models.patient_otp import PatientOTP
+from functools import wraps
+
+## to be moved 
+def validateOTP(func):
+    @wraps(func)
+    def validatePatientOTP(self, request, *args, **kwargs):
+        try:
+            patient_otp = PatientOTP.objects.get(otp=kwargs['otp'])
+        except PatientOTP.DoesNotExist:      
+            raise Http404("No matches the given query.")  
+        return func(self, request, *args, **kwargs)
+
+    return validatePatientOTP
 
 class PatientView(View): 
     form_class = IllnessDataForm
     template = 'patient/add_illness_data.html'
     template_success = 'patient/success_illness_data.html'
 
+    @validateOTP
     def get(self, request, *args, **kwargs):
         return render(request, self.template, {'form': IllnessDataForm})   
 

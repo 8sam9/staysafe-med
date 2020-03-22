@@ -3,5 +3,5 @@ from django.urls import path
 from staysafemed.views import *
 
 urlpatterns = [
-    path('', PatientView.as_view()),
+    path('<str:otp>/', PatientView.as_view())
 ]
