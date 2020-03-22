@@ -17,7 +17,7 @@ class Patient(models.Model):
     mobile_number_1 = models.CharField(max_length=30, blank=True)
     mobile_number_2 = models.CharField(max_length=30, blank=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    illness_status = models.ForeignKey(IllnessStatus, on_delete=models.CASCADE, blank=True)
+    illness_status = models.ForeignKey(IllnessStatus, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.ssn

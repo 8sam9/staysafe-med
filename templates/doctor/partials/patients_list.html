@@ -22,7 +22,7 @@
             <td> {{patient.ssn}}</td>
             <td>{% if patient.illnessdata_set.last.mews_score %} - {{patient.illnessdata_set.last.mews_score}}{% endif %}</td>
             <td>{{patient.mobile_number_1}}</td>
-            <td><a href="#"><i class="fas fa-info-circle info-patient-icon"></i></a> </td>
+            <td><a href="{% url 'doctor.patients.detail' patient.id %}"><i class="fas fa-info-circle info-patient-icon"></i></a> </td>
         </tr>
 
         {% endfor %}
