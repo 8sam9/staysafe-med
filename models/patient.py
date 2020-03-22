@@ -25,6 +25,10 @@ class Patient(models.Model):
         illnessDataset = self.illnessdata_set.all()
         return illnessDataset.last().mews_score if illnessDataset else 0
 
+    @property
+    def currentPatientOTP(self):
+        return self.patientotp.all().last()
+
 
 class PatientHasIllnessStatus(models.Model):
     illness_status = models.ForeignKey(IllnessStatus, on_delete=models.CASCADE)

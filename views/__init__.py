@@ -1,2 +1,2 @@
 from .patient_illnessdata_view import PatientIllnessDataView
-from .patient_doctor__views import PatientsDoctorView
+from .patient_doctor_views import PatientsDoctorListView, PatientDoctorDetailView
