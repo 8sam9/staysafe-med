@@ -1,0 +1,31 @@
+{% extends 'doctor/master.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container">
+    <div class="pt-5 pb-4 text-center">
+        <h4 class="mt-4 mb-4">Lista pazienti</h4>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-6">
+            <div class="row">
+                <div class="col">
+                    {% if messages %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                {% for message in messages %}
+                                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}" role="alert">{{ message }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% for patient in patientsList %}
+                        {{patient.ssn}} - {{patient.mobile_number_1}} - {{patient.mobile_number_2}}{% if patient.illnessdata_set.last.mews_score %} - {{patient.illnessdata_set.last.mews_score}}{% endif %}</br>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

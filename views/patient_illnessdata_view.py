@@ -23,7 +23,7 @@ def validateOTP(func):
     return validatePatientOTP
 
 
-class PatientView(View): 
+class PatientIllnessDataView(View): 
     form_class = IllnessDataForm
     template = 'patient/add_illness_data.html'
     template_success = 'patient/success_illness_data.html'

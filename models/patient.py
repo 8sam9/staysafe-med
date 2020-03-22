@@ -20,6 +20,11 @@ class Patient(models.Model):
     def __str__(self):
         return self.ssn
 
+    @property
+    def lastIllnessDataScore(self):
+        illnessDataset = self.illnessdata_set.all()
+        return illnessDataset.last().mews_score if illnessDataset else 0
+
 
 class PatientHasIllnessStatus(models.Model):
     illness_status = models.ForeignKey(IllnessStatus, on_delete=models.CASCADE)
