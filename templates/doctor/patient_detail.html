@@ -2,6 +2,17 @@
 {% load widget_tweaks %}
 
 {% block content %}
-
-
-{% endblock %}
+    <h1>Paziente</h1>
+    {{ patient.ssn }}
+    <br><br>
+    <h2> Illness Data </h2>
+    {% if illnessdata is not None %}
+        {% for illnessdatarecord in illnessdata %}
+            {{ illnessdatarecord.breath_frequency }}
+            <br>
+            {{ illnessdatarecord.heart_rate }}
+            <br>
+            ....
+        {% endfor %}
+    {% endif %}    
+{% endblock %}  
