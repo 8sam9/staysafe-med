@@ -26,7 +26,7 @@ class IllnessData(models.Model):
             )
 
     def __getSingleMewsScore(self, dataset, value):
-        return next(data['score'] for data in dataset if data['min'] <= value < data['max']) # noqa
+        return next((data['score'] for data in dataset if data['min'] <= value < data['max']), 0) # noqa
 
     def __getMewsScore(self):
         breathFrenquencyRanges = [
