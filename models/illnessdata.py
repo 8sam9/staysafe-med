@@ -11,11 +11,11 @@ LC_ALL = '{}_{}.UTF-8'.format(LC.lower(), LC.upper())
 
 
 class IllnessData(models.Model):
-    breath_frequency = models.DecimalField(max_digits=5, decimal_places=2)
-    heart_rate = models.DecimalField(max_digits=5, decimal_places=2)
-    systolic_pressure = models.DecimalField(max_digits=5, decimal_places=2)
+    breath_frequency = models.IntegerField()
+    heart_rate = models.IntegerField()
+    systolic_pressure = models.IntegerField()
     body_temperature = models.DecimalField(max_digits=5, decimal_places=2)
-    oxygen_saturation = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True) # noqa
+    oxygen_saturation = models.IntegerField(blank=True, null=True)
     mews_score = models.IntegerField(default=0)
     notes = models.TextField(blank=True)
     date_create = models.DateTimeField(default=timezone.now)
