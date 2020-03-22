@@ -1,11 +1,10 @@
 
-
-    <h2>Lista pazienti attivi</h2>
-
+<h2>Lista pazienti attivi</h2>
+<div class="mb-4">
     <input class="form-control" id="SearchPatientInput" type="text" placeholder="Cerca paziente..">
-    <br>
-    <table class="table table-bordered table-striped" id="patientsTable">
-        <thead>
+</div>
+<table class="table table-bordered table-striped" id="patientsTable">
+    <thead>
         <tr>
             <th>SSN</th>
             <th>Nome</th>
@@ -13,39 +12,31 @@
             <th>Cellulare</th>
             <th>Info</th>
         </tr>
-        </thead>
-        <tbody id="PatientList">
-
+    </thead>
+    <tbody id="PatientList">
         {% for patient in patients %}
-        <tr>
-            <td> {{patient.ssn}}</td>
-            <td> {{patient.patientFullName}}</td>
-            <td>{% if patient.illnessdata_set.last.mews_score %}{{patient.illnessdata_set.last.mews_score}}{% endif %}</td>
-            <td>{{patient.mobile_number_1}}</td>
-            <td><a href="{% url 'doctor.patients.detail' patient.id %}"><i class="fas fa-info-circle info-patient-icon"></i></a> </td>
-        </tr>
-
+            <tr>
+                <td>{{patient.ssn}}</td>
+                <td>{{patient.patientFullName}}</td>
+                <td>{% if patient.illnessdata_set.last.mews_score %}{{patient.illnessdata_set.last.mews_score}}{% endif %}</td>
+                <td>{{patient.mobile_number_1}}</td>
+                <td><a href="{% url 'doctor.patients.detail' patient.id %}"><i class="fas fa-info-circle info-patient-icon"></i></a></td>
+            </tr>
         {% endfor %}
-
-        </tbody>
-    </table>
-
-</div>
-
-
-    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-    <script src="//cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" >
-
+    </tbody>
+</table>
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" >
 <script>
-    $(document).ready(function(){
+    $(document).ready(function()
+    {
         $("#SearchPatientInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
             $("#PatientList tr").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
-
 
         $('#patientsTable').DataTable({
             "order": [[ 2, "desc" ]],
@@ -54,10 +45,6 @@
             "info": false
         });
         $('.dataTables_length').addClass('bs-select');
-
     });
-
-
-
 </script>
 
