@@ -17,6 +17,9 @@ class Patient(models.Model):
     def __str__(self):
         return self.ssn
 
+    def lastIllnessData(self):
+        return self.illnessdata_set.last()
+
     @property
     def patientFullName(self):
         return '{} {}'.format(self.last_name, self.first_name)

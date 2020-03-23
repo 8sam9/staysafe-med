@@ -8,6 +8,13 @@
         <tr>
             <th>SSN</th>
             <th>Nome</th>
+
+            <th>Freq.<br> Resp.</th>
+            <th>Freq.<br> Card.</th>
+            <th>Pressione<br> Sistolica</th>
+            <th>Temp.<br> Corp.</th>
+            <th>Saturazione<br> Ossigeno</th>
+
             <th>SCORE</th>
             <th>Cellulare</th>
             <th>Invio OTP</th>
@@ -19,6 +26,13 @@
             <tr>
                 <td>{{patient.ssn}}</td>
                 <td>{{patient.patientFullName}}</td>
+
+                <td>{{ patient.lastIllnessData.breath_frequency }}</td>
+                <td>{{ patient.lastIllnessData.heart_rate }}</td>
+                <td>{{ patient.lastIllnessData.systolic_pressure }}</td>
+                <td>{{ patient.lastIllnessData.body_temperature|floatformat }} °C</td>
+                <td>{% if patient.lastIllnessData.oxygen_saturation %}{{ patient.lastIllnessData.oxygen_saturation }}{% endif %}</td>
+
                 <td>{% if patient.illnessdata_set.last.mews_score %}{{patient.illnessdata_set.last.mews_score}}{% endif %}</td>
                 <td>{{patient.mobile_number_1}}</td>
                 <td><a href="javascript:window.location='https://wa.me/{{patient.mobile_number_1}}/?text='+encodeURIComponent(window.location.origin + '/{{patient.currentPatientOTP.otp}}/')"><i class="fab fa-whatsapp info-patient-icon"></i></a></td>
