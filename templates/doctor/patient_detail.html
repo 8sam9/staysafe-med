@@ -6,10 +6,10 @@
         <div class="row mt-5">
             <div class="col">
                 <h1>Paziente: {{ patient.patientFullName }}</h1>
-                <h3 class="mb-4">SSN: {{ patient.ssn }}</h3>
+                <h3 class="mb-5">SSN: {{ patient.ssn }}</h3>
                 <h5>Dati del paziente:</h5>
                 {% if illnessdata is not None %}
-                    <table class="table table-bordered table-striped" id="patientsTable">
+                    <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Frequenza<br> Respiro</th>
@@ -18,7 +18,7 @@
                                 <th>Temperatura<br> Corporea</th>
                                 <th>Saturazione<br> Ossigeno</th>
                                 <th>Score</th>
-                                <th>Data ora</th>
+                                <th>Data e ora</th>
                                 <th>&nbsp;</th>
                             </tr>
                         </thead>
@@ -28,11 +28,11 @@
                                     <td>{{ illnessdatarecord.breath_frequency }}</td>
                                     <td>{{ illnessdatarecord.heart_rate }}</td>
                                     <td>{{ illnessdatarecord.systolic_pressure }}</td>
-                                    <td>{{ illnessdatarecord.body_temperature }}</td>
-                                    <td>{{ illnessdatarecord.oxygen_saturation }}</td>
+                                    <td>{{ illnessdatarecord.body_temperature|floatformat }} °C</td>
+                                    <td>{% if illnessdatarecord.oxygen_saturation %}{{ illnessdatarecord.oxygen_saturation }}{% endif %}</td>
                                     <td>{{ illnessdatarecord.mews_score }}</td>
-                                    <td>{{ illnessdatarecord.date_create }}</td>
-                                    <td></td>
+                                    <td>{{ illnessdatarecord.date_create|date:"d/m/y H:i" }}</td>
+                                    <td class="text-center"><a class="btn btn-sm btn-danger" href="#">Elimina</a></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
