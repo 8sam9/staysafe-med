@@ -41,5 +41,15 @@
                 {% endif %}
             </div>
         </div>
+        <div clas="row mt-5">
+            <div class="col">
+                <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+                    <canvas id="chart"></canvas>
+                    <script>
+                        lineChart('chart', {{dataset}} , {{dataset}} );
+                    </script>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}  

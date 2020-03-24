@@ -30,7 +30,11 @@ class PatientDoctorDetailView(generic.View):
         except Patient.DoesNotExist:
             raise Http404("No matches the given query.")
         illnessdata = IllnessData.objects.filter(patient=patient)
-        return render(request, self.template, {'patient': patient, 'illnessdata':illnessdata})
+        date_labels = [x['date_create'].date().strftime("%d/%m/%Y") for x in illnessdata.values('date_create')]
+        dataset = [x['mews_score'] for x in illnessdata.values('mews_score')]
+        print(date_labels)
+        print(dataset)
+        return render(request, self.template, {'patient': patient, 'illnessdata':illnessdata, 'date_labels':date_labels, 'dataset': dataset})
 
 
                
