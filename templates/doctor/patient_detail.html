@@ -8,7 +8,7 @@
                 <h1>Paziente: {{ patient.patientFullName }}</h1>
                 <h3 class="mb-5">SSN: {{ patient.ssn }}</h3>
                 <h5>Dati del paziente:</h5>
-                {% if illnessdata is not None %}
+                {% if illnessdata %}
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>

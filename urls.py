@@ -5,6 +5,7 @@ from staysafemed.views import *
 urlpatterns = [
     path('patients/', include([
         path('', PatientsDoctorListView.as_view(), name='doctor.patients.list'),
+        path('add/', PatientDoctorAddView.as_view(), name='doctor.patients.add'),
         path('<int:id>/', PatientDoctorDetailView.as_view(), name='doctor.patients.detail')
     ])),
     path('doc/', include([
