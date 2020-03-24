@@ -17,7 +17,6 @@ class PatientIllnessDataView(View):
         patient_otp = kwargs['patientOTP']
         patient = Patient.objects.get(pk=patient_otp.patient.id)    
         last_data_entry = IllnessData.objects.filter(patient=patient).last()
-        print(last_data_entry.date_create)
         return render(request, self.template, {'form': IllnessDataForm, 'patient': patient, 'illness_data':last_data_entry})
 
     @method_decorator(validateOTP)
