@@ -31,7 +31,7 @@ class PatientDoctorDetailView(generic.View):
             patient = Patient.objects.get(pk=kwargs['id'])
         except Patient.DoesNotExist:
             raise Http404("No matches the given query.")
-        illnessdata = IllnessData.objects.filter(patient=patient)
+        illnessdata = IllnessData.objects.filter(patient=patient).order_by('-date_create')
         return render(request, self.template, {'patient': patient, 'illnessdata':illnessdata})
 
 
