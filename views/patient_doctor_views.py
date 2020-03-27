@@ -7,6 +7,10 @@ from staysafemed.models.patient_otp import PatientOTP
 from staysafemed.models.illnessdata import IllnessData
 from staysafemed.forms.patient_form import PatientDataForm
 from staysafemed.decorators import authenticatedDoctor
+from staysafemed.models.dataset import IllnessDataSet
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+
 
 
 class PatientsDoctorListView(generic.ListView):
@@ -32,13 +36,16 @@ class PatientDoctorDetailView(generic.View):
         except Patient.DoesNotExist:
             raise Http404("No matches the given query.")
 
-        date_labels = [x['date_create'].date().strftime("%d/%m/%Y") for x in illnessdata.values('date_create')]
-        dataset = [x['mews_score'] for x in illnessdata.values('mews_score')]
         illnessdata = IllnessData.objects.filter(patient=patient).order_by('-date_create')
-        print(date_labels)
-        print(dataset)
-        return render(request, self.template, {'patient': patient, 'illnessdata':illnessdata, 'date_labels':date_labels, 'dataset': dataset})
-
+        date_labels = [x['date_create'].date().strftime("%d/%m") for x in illnessdata.values('date_create')]
+        datasets = []
+        datasets.append(IllnessDataSet('breath_frequency',illnessdata, 'Frequenza di respiro',borderColor='rgb(255, 99, 132)'))
+        datasets.append(IllnessDataSet('heart_rate',illnessdata, 'Frequenza cardiaca' , borderColor='rgb(116, 0, 0)'))
+        datasets.append(IllnessDataSet('systolic_pressure',illnessdata, 'Pressione Sistolica' , borderColor='rgb(116, 150, 0)'))
+        datasets.append(IllnessDataSet('body_temperature',illnessdata, 'Temperatura Corporea' , borderColor='rgb(116, 220, 0)'))
+        datasets.append(IllnessDataSet('oxygen_saturation',illnessdata, 'Saturazione Ossigeno' ,borderColor='rgb(116, 54, 0)'))
+        #datasets.append(IllnessDataSet('mews_score',illnessdata, 'Saturazione Ossigeno' ,borderColor='rgb(116, 54, 0)'))
+        return render(request, self.template, {'patient': patient, 'illnessdata':illnessdata, 'date_labels':date_labels, 'dataset': json.dumps([dataset.__dict__ for dataset in datasets],cls=DjangoJSONEncoder)})
 class PatientDoctorAddView(generic.View):
     form_class = PatientDataForm
     template = 'doctor/patient_create.html'
