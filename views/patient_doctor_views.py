@@ -38,18 +38,31 @@ class PatientDoctorDetailView(generic.View):
 
         illnessdata = IllnessData.objects.filter(patient=patient).order_by('-date_create')
         date_labels = [x['date_create'].date().strftime("%d/%m") for x in illnessdata.values('date_create')]
-        datasets = []
-        datasets.append(IllnessDataSet('breath_frequency',illnessdata, 'Frequenza di respiro',borderColor='rgb(255, 99, 132)'))
-        datasets.append(IllnessDataSet('heart_rate',illnessdata, 'Frequenza cardiaca' , borderColor='rgb(116, 0, 0)'))
-        datasets.append(IllnessDataSet('systolic_pressure',illnessdata, 'Pressione Sistolica' , borderColor='rgb(116, 150, 0)'))
-        datasets.append(IllnessDataSet('body_temperature',illnessdata, 'Temperatura Corporea' , borderColor='rgb(116, 220, 0)'))
-        datasets.append(IllnessDataSet('oxygen_saturation',illnessdata, 'Saturazione Ossigeno' ,borderColor='rgb(116, 54, 0)'))
-        #datasets.append(IllnessDataSet('mews_score',illnessdata, 'Saturazione Ossigeno' ,borderColor='rgb(116, 54, 0)'))
+        
+        # General Dataset 
+
+        general_datasets = [
+            IllnessDataSet('breath_frequency',illnessdata, 'Frequenza di respiro',borderColor='rgb(255, 99, 132)'),
+            IllnessDataSet('heart_rate',illnessdata, 'Frequenza cardiaca' , borderColor='rgb(116, 0, 0)'),
+            IllnessDataSet('systolic_pressure',illnessdata, 'Pressione Sistolica' , borderColor='rgb(116, 150, 0)'),
+            IllnessDataSet('body_temperature',illnessdata, 'Temperatura Corporea' , borderColor='rgb(116, 220, 0)'),
+            IllnessDataSet('oxygen_saturation',illnessdata, 'Saturazione Ossigeno' ,borderColor='rgb(116, 54, 0)')
+            ]
         general_chart = { 
             'date_labels': date_labels,
-            'dataset' : json.dumps([dataset.__dict__ for dataset in datasets],cls=DjangoJSONEncoder)
+            'dataset' : json.dumps([dataset.__dict__ for dataset in general_datasets],cls=DjangoJSONEncoder)
         }
-        return render(request, self.template, {'patient': patient, 'illnessdata':illnessdata, 'general_chart':general_chart })
+
+        # Mew Score Dataset 
+
+        mew_score_datasets = [
+            IllnessDataSet('mews_score',illnessdata, 'Mew Score' ,borderColor='rgb(206, 10, 0)',backgroundColor='rgba(206, 10, 0, 0.2)', fill=True)
+        ]
+        mew_score_chart = { 
+            'date_labels': date_labels,
+            'dataset' : json.dumps([dataset.__dict__ for dataset in mew_score_datasets],cls=DjangoJSONEncoder)
+        }
+        return render(request, self.template, {'patient': patient, 'illnessdata':illnessdata, 'general_chart':general_chart, 'mew_score_chart': mew_score_chart })
 
 class PatientDoctorAddView(generic.View):
     form_class = PatientDataForm

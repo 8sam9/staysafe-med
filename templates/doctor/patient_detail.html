@@ -46,11 +46,18 @@
         </div>
         <div clas="row mt-5">
             <div class="col">
-                <canvas id="dataChart"></canvas>
+                <canvas id="generalChart"></canvas>
+            </div>
+        </div>
+        <div clas="row mt-5">
+            <div class="col">
+                <canvas id="mewScoreChart"></canvas>
             </div>
         </div>
     </div>
     <script>
-        lineChart('dataChart',{{general_chart.date_labels|safe}},{{general_chart.dataset|safe}});
+        createChart('generalChart','line', {{general_chart.date_labels|safe}},{{general_chart.dataset|safe}});
+        createChart('mewScoreChart','bar', {{mew_score_chart.date_labels|safe}},{{mew_score_chart.dataset|safe}});
+
     </script>
 {% endblock %}  

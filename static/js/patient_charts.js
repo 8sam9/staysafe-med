@@ -1,9 +1,9 @@
-function lineChart(id,labels,datasets){
+function createChart(id,type,labels,datasets){
 
     console.log(datasets);
     var ctx = document.getElementById(id).getContext('2d');
     var myChart = new Chart(ctx, {
-        type: 'line',
+        type: type,
         data: {
             labels: labels,
             datasets: datasets
@@ -20,3 +20,4 @@ function lineChart(id,labels,datasets){
     });
 
 };
+
