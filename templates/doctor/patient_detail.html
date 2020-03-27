@@ -12,6 +12,7 @@
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Frequenza<br> Respiro</th>
                                 <th>Frequenza<br> Cardiaca</th>
                                 <th>Pressione<br> Sistolica</th>
@@ -25,6 +26,7 @@
                         <tbody id="PatientList">
                             {% for illnessdatarecord in illnessdata %}
                                 <tr>
+                                    <td>{{ forloop.counter }}</td>
                                     <td>{{ illnessdatarecord.breath_frequency }}</td>
                                     <td>{{ illnessdatarecord.heart_rate }}</td>
                                     <td>{{ illnessdatarecord.systolic_pressure }}</td>
@@ -103,7 +105,7 @@
             t: dtf.format(new Date('{{illnesdatarecord.date_create}}')),
             y: {{illnesdatarecord.oxygen_saturation|default_if_none:'NaN'}}
         });
-        labels.push(dtf.format(new Date('{{illnesdatarecord.date_create}}')));
+        labels.push('{{ forloop.counter }}');
         {% endfor %}
         var myChart = new Chart(ctx, {
             type: 'line',
@@ -113,7 +115,7 @@
             },
             scales: {
                 xAxes: [{
-                    type: 'time'
+                    display: false
                 }]
             }
         });
