@@ -9,6 +9,7 @@
                 <h3 class="mb-5">SSN: {{ patient.ssn }}</h3>
                 <h5>Dati del paziente:</h5>
                 {% if illnessdata %}
+                <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -39,7 +40,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
-
+                </div>
                 {% endif %}
             </div>
         </div>

@@ -3,46 +3,48 @@
 <div class="mb-4">
     <input class="form-control" id="SearchPatientInput" type="text" placeholder="Cerca paziente..">
 </div>
-<table class="table table-bordered table-striped" id="patientsTable">
-    <thead>
-        <tr>
-            <th>SSN</th>
-            <th>Nome</th>
-
-            <th>Freq.<br> Resp.</th>
-            <th>Freq.<br> Card.</th>
-            <th>Pressione<br> Sistolica</th>
-            <th>Temp.<br> Corp.</th>
-            <th>Saturazione<br> Ossigeno</th>
-
-            <th>SCORE</th>
-            <th>Cellulare</th>
-            <th>Invio OTP</th>
-            <th>Info</th>
-        </tr>
-    </thead>
-    <tbody id="PatientList">
-        {% for patient in patients %}
+<div class="table-responsive">
+    <table class="table table-bordered table-striped" id="patientsTable">
+        <thead>
             <tr>
-                <td>{{patient.ssn}}</td>
-                <td>{{patient.patientFullName}}</td>
-                {% if patient.lastIllnessData %}
-                <td>{{ patient.lastIllnessData.breath_frequency }}</td>
-                <td>{{ patient.lastIllnessData.heart_rate }}</td>
-                <td>{{ patient.lastIllnessData.systolic_pressure }}</td>
-                <td>{{ patient.lastIllnessData.body_temperature|floatformat }} °C</td>
-                <td>{% if patient.lastIllnessData.oxygen_saturation %}{{ patient.lastIllnessData.oxygen_saturation }}{% endif %}</td>
-                <td>{% if patient.illnessdata_set.last.mews_score %}{{patient.illnessdata_set.last.mews_score}}{% endif %}</td>
-                {% else %}
-                <td colspan="6"></td>
-                {% endif %}
-                <td>{{patient.mobile_number_1}}</td>
-                <td><a href="javascript:window.location='https://wa.me/{{patient.mobile_number_1}}/?text='+encodeURIComponent(window.location.origin + '/{{patient.currentPatientOTP.otp}}/')"><i class="fab fa-whatsapp info-patient-icon"></i></a></td>
-                <td><a href="{% url 'doctor.patients.detail' patient.id %}"><i class="fas fa-info-circle info-patient-icon"></i></a></td>
+                <th scope="col">SSN</th>
+                <th scope="col">Nome</th>
+
+                <th scope="col">Freq.<br> Resp.</th>
+                <th scope="col">Freq.<br> Card.</th>
+                <th scope="col">Pressione<br> Sistolica</th>
+                <th scope="col">Temp.<br> Corp.</th>
+                <th scope="col">Saturazione<br> Ossigeno</th>
+
+                <th scope="col">SCORE</th>
+                <th scope="col">Cellulare</th>
+                <th scope="col">Invio OTP</th>
+                <th scope="col">Info</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody id="PatientList">
+            {% for patient in patients %}
+                <tr>
+                    <td>{{patient.ssn}}</td>
+                    <td>{{patient.patientFullName}}</td>
+                    {% if patient.lastIllnessData %}
+                    <td>{{ patient.lastIllnessData.breath_frequency }}</td>
+                    <td>{{ patient.lastIllnessData.heart_rate }}</td>
+                    <td>{{ patient.lastIllnessData.systolic_pressure }}</td>
+                    <td>{{ patient.lastIllnessData.body_temperature|floatformat }} °C</td>
+                    <td>{% if patient.lastIllnessData.oxygen_saturation %}{{ patient.lastIllnessData.oxygen_saturation }}{% endif %}</td>
+                    <td>{% if patient.illnessdata_set.last.mews_score %}{{patient.illnessdata_set.last.mews_score}}{% endif %}</td>
+                    {% else %}
+                    <td colspan="6"></td>
+                    {% endif %}
+                    <td>{{patient.mobile_number_1}}</td>
+                    <td><a href="javascript:window.location='https://wa.me/{{patient.mobile_number_1}}/?text='+encodeURIComponent(window.location.origin + '/{{patient.currentPatientOTP.otp}}/')"><i class="fab fa-whatsapp info-patient-icon"></i></a></td>
+                    <td><a href="{% url 'doctor.patients.detail' patient.id %}"><i class="fas fa-info-circle info-patient-icon"></i></a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 <script src="//cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" >
