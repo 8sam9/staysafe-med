@@ -8,10 +8,11 @@
                 <h1>Paziente: {{ patient.patientFullName }}</h1>
                 <h3 class="mb-5">SSN: {{ patient.ssn }}</h3>
                 <h5>Dati del paziente:</h5>
-                {% if illnessdata is not None %}
+                {% if illnessdata %}
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Frequenza<br> Respiro</th>
                                 <th>Frequenza<br> Cardiaca</th>
                                 <th>Pressione<br> Sistolica</th>
@@ -25,6 +26,7 @@
                         <tbody id="PatientList">
                             {% for illnessdatarecord in illnessdata %}
                                 <tr>
+                                    <td>{{ forloop.counter }}</td>
                                     <td>{{ illnessdatarecord.breath_frequency }}</td>
                                     <td>{{ illnessdatarecord.heart_rate }}</td>
                                     <td>{{ illnessdatarecord.systolic_pressure }}</td>
@@ -40,6 +42,10 @@
 
                 {% endif %}
             </div>
+            <div class="col-12">
+                <canvas id="dataChart"></canvas>
+            </div>
+        </div>
         </div>
         <div clas="row mt-5">
             <div class="col">
@@ -52,4 +58,76 @@
             </div>
         </div>
     </div>
+    <script>
+        var dtf = new Intl.DateTimeFormat('it', { dateStyle: 'short', timeStyle: 'short' });
+        var ctx = document.getElementById('dataChart').getContext('2d');
+        var datasets = {
+            brDataset: {
+                fill: false,
+                borderColor: 'rgba(31, 223, 223, 0.7)',
+                label: 'Frequenza Respiro',
+                data: []
+            },
+            hrDataset: {
+                fill: false,
+                borderColor: 'rgba(214, 30, 30, 0.7)',
+                label: 'Frequenza Cardiaca',
+                data: []
+            },
+            spDataset: {
+                fill: false,
+                borderColor: 'rgba(25, 25, 219, 0.7)',
+                label: 'Pressione Sistolica',
+                data: []
+            },
+            btDataset: {
+                fill: false,
+                borderColor: 'rgba(219, 122, 25, 0.7)',
+                label: 'Temperatura Corporea',
+                data: []
+            },
+            osDataset: {
+                fill: false,
+                borderColor: 'rgba(115, 25, 219, 0.7)',
+                label: 'Saturazione Ossigeno',
+                data: []
+            }
+        };
+        var labels = [];
+        {% for illnesdatarecord in illnessdata %}
+        datasets.brDataset.data.push({
+            t: dtf.format(new Date('{{illnesdatarecord.date_create}}')),
+            y: {{illnesdatarecord.breath_frequency|default_if_none:'NaN'}}
+            });
+        datasets.hrDataset.data.push({
+            t: dtf.format(new Date('{{illnesdatarecord.date_create}}')),
+            y: {{illnesdatarecord.heart_rate|default_if_none:'NaN'}}
+        });
+        datasets.spDataset.data.push({
+            t: dtf.format(new Date('{{illnesdatarecord.date_create}}')),
+            y: {{illnesdatarecord.systolic_pressure|default_if_none:'NaN'}}
+        });
+        datasets.btDataset.data.push({
+            t: dtf.format(new Date('{{illnesdatarecord.date_create}}')),
+            y: {% if illnesdatarecord.body_temperature %}parseFloat('{{illnesdatarecord.body_temperature}}'.replace(',', '.')){% else %}'NaN'{% endif %}
+        });
+        datasets.osDataset.data.push({
+            t: dtf.format(new Date('{{illnesdatarecord.date_create}}')),
+            y: {{illnesdatarecord.oxygen_saturation|default_if_none:'NaN'}}
+        });
+        labels.push('{{ forloop.counter }}');
+        {% endfor %}
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: Object.values(datasets)
+            },
+            scales: {
+                xAxes: [{
+                    display: false
+                }]
+            }
+        });
+    </script>
 {% endblock %}  

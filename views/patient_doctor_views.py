@@ -1,9 +1,11 @@
 from django.views import generic
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.http import Http404
 from django.utils.decorators import method_decorator
 from staysafemed.models.patient import Patient
+from staysafemed.models.patient_otp import PatientOTP
 from staysafemed.models.illnessdata import IllnessData
+from staysafemed.forms.patient_form import PatientDataForm
 from staysafemed.decorators import authenticatedDoctor
 
 
@@ -29,13 +31,31 @@ class PatientDoctorDetailView(generic.View):
             patient = Patient.objects.get(pk=kwargs['id'])
         except Patient.DoesNotExist:
             raise Http404("No matches the given query.")
-        illnessdata = IllnessData.objects.filter(patient=patient)
+
         date_labels = [x['date_create'].date().strftime("%d/%m/%Y") for x in illnessdata.values('date_create')]
         dataset = [x['mews_score'] for x in illnessdata.values('mews_score')]
+        illnessdata = IllnessData.objects.filter(patient=patient).order_by('-date_create')
         print(date_labels)
         print(dataset)
         return render(request, self.template, {'patient': patient, 'illnessdata':illnessdata, 'date_labels':date_labels, 'dataset': dataset})
 
+class PatientDoctorAddView(generic.View):
+    form_class = PatientDataForm
+    template = 'doctor/patient_create.html'
 
-               
+    @method_decorator(authenticatedDoctor)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template, {'form': self.form_class})
+
+    @method_decorator(authenticatedDoctor)
+    def post(self, request, *args, **kwargs):
+        patient = Patient(doctor=self.request.user)
+        form = self.form_class(request.POST, instance=patient)
+        if form.is_valid():
+            form.save()
+            patientOtp = PatientOTP(patient=patient)
+            patientOtp.save()
+            return redirect(reverse('doctor.patients.list'))
+
+        return render(request, self.template, {'form': self.form_class})
 
