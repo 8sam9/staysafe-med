@@ -45,7 +45,12 @@ class PatientDoctorDetailView(generic.View):
         datasets.append(IllnessDataSet('body_temperature',illnessdata, 'Temperatura Corporea' , borderColor='rgb(116, 220, 0)'))
         datasets.append(IllnessDataSet('oxygen_saturation',illnessdata, 'Saturazione Ossigeno' ,borderColor='rgb(116, 54, 0)'))
         #datasets.append(IllnessDataSet('mews_score',illnessdata, 'Saturazione Ossigeno' ,borderColor='rgb(116, 54, 0)'))
-        return render(request, self.template, {'patient': patient, 'illnessdata':illnessdata, 'date_labels':date_labels, 'dataset': json.dumps([dataset.__dict__ for dataset in datasets],cls=DjangoJSONEncoder)})
+        general_chart = { 
+            'date_labels': date_labels,
+            'dataset' : json.dumps([dataset.__dict__ for dataset in datasets],cls=DjangoJSONEncoder)
+        }
+        return render(request, self.template, {'patient': patient, 'illnessdata':illnessdata, 'general_chart':general_chart })
+
 class PatientDoctorAddView(generic.View):
     form_class = PatientDataForm
     template = 'doctor/patient_create.html'

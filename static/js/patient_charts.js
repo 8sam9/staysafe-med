@@ -1,6 +1,5 @@
 function lineChart(id,labels,datasets){
 
-    console.log('chart');
     console.log(datasets);
     var ctx = document.getElementById(id).getContext('2d');
     var myChart = new Chart(ctx, {
@@ -14,8 +13,7 @@ function lineChart(id,labels,datasets){
                 yAxes: [{
                     ticks: {
                         beginAtZero: true
-                    },
-                    stacked:true
+                    }
                 }]
             }
         }
