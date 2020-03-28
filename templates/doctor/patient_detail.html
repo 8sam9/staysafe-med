@@ -7,6 +7,15 @@
             <div class="col">
                 <h1>Paziente: {{ patient.patientFullName }}</h1>
                 <h3 class="mb-5">SSN: {{ patient.ssn }}</h3>
+            </div>
+        </div>
+        <div clas="row mt-5">
+            <div class="col">
+                <canvas id="mewScoreChart"></canvas>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
                 <h5>Dati del paziente:</h5>
                 {% if illnessdata %}
                 <div class="table-responsive">
@@ -49,15 +58,21 @@
                 <canvas id="generalChart"></canvas>
             </div>
         </div>
-        <div clas="row mt-5">
-            <div class="col">
-                <canvas id="mewScoreChart"></canvas>
-            </div>
-        </div>
     </div>
     <script>
-        createChart('generalChart','line', {{general_chart.date_labels|safe}},{{general_chart.dataset|safe}});
-        createChart('mewScoreChart','bar', {{mew_score_chart.date_labels|safe}},{{mew_score_chart.dataset|safe}});
-
+        createChart({
+            id: 'generalChart',
+            type: 'line',
+            labels: {{general_chart.date_labels|safe}},
+            datasets: {{general_chart.dataset|safe}}
+        });
+        createChart({
+            id: 'mewScoreChart',
+            type: 'bar',
+            labels: {{mew_score_chart.date_labels|safe}},
+            datasets: {{mew_score_chart.dataset|safe}},
+            yAxesStepSize: 1,
+            aspectRatio: 2.5
+        });
     </script>
 {% endblock %}  
