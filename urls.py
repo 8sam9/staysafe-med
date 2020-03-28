@@ -9,6 +9,7 @@ urlpatterns = [
         path('<int:id>/', PatientDoctorDetailView.as_view(), name='doctor.patients.detail')
     ])),
     path('doc/', include([
+        path('register/', DoctorRegistrationView.as_view(), name='doctor.signup'),
         path('login/', DoctorAuthView.as_view(), name='doctor.login'),
     ])),
     path('<str:otp>/', PatientIllnessDataView.as_view(), name='patients.insertdata')
