@@ -7,17 +7,14 @@
     <table class="table table-bordered table-striped" id="patientsTable">
         <thead>
             <tr>
-                <th scope="col">SSN</th>
-                <th scope="col">Nome</th>
+                <th scope="col">ID</th>
 
                 <th scope="col">Freq.<br> Resp.</th>
                 <th scope="col">Freq.<br> Card.</th>
                 <th scope="col">Pressione<br> Sistolica</th>
                 <th scope="col">Temp.<br> Corp.</th>
                 <th scope="col">Saturazione<br> Ossigeno</th>
-
                 <th scope="col">SCORE</th>
-                <th scope="col">Cellulare</th>
                 <th scope="col">Invio OTP</th>
                 <th scope="col">Info</th>
             </tr>
@@ -26,7 +23,6 @@
             {% for patient in patients %}
                 <tr>
                     <td>{{patient.ssn}}</td>
-                    <td>{{patient.patientFullName}}</td>
                     {% if patient.lastIllnessData %}
                     <td>{{ patient.lastIllnessData.breath_frequency }}</td>
                     <td>{{ patient.lastIllnessData.heart_rate }}</td>
@@ -35,10 +31,16 @@
                     <td>{% if patient.lastIllnessData.oxygen_saturation %}{{ patient.lastIllnessData.oxygen_saturation }}{% endif %}</td>
                     <td>{% if patient.illnessdata_set.last.mews_score is not None %}{{patient.illnessdata_set.last.mews_score}}{% endif %}</td>
                     {% else %}
-                    <td colspan="6"></td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td>
                     {% endif %}
-                    <td>{{patient.mobile_number_1}}</td>
-                    <td><a href="javascript:window.location='https://wa.me/{{patient.mobile_number_1}}/?text='+encodeURIComponent(window.location.origin + '/{{patient.currentPatientOTP.otp}}/')"><i class="fab fa-whatsapp info-patient-icon"></i></a></td>
+                    <td>
+                        <a href="javascript:window.location='mailto:?subject='+encodeURIComponent('Invio dati accesso alla piattaforma monitoraggio')+'&body='+encodeURIComponent(window.location.origin + '/{{patient.currentPatientOTP.otp}}/')">
+                            <i class="far fa-envelope info-patient-icon"></i>
+                        </a>
+                        <a href="javascript:window.location='https://wa.me/?text='+encodeURIComponent(window.location.origin + '/{{patient.currentPatientOTP.otp}}/')">
+                            <i class="fab fa-whatsapp info-patient-icon"></i>
+                        </a>
+                    </td>
                     <td><a href="{% url 'doctor.patients.detail' patient.id %}"><i class="fas fa-info-circle info-patient-icon"></i></a></td>
                 </tr>
             {% endfor %}

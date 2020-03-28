@@ -6,10 +6,7 @@ class Doctor(User):
         proxy = True
 
     def __str__(self):
-        return '{} {}'.format(
-            self.first_name,
-            self.last_name
-        )
+        return self.ssnid
 
     @property
     def ssnid(self):

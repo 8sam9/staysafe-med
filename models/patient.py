@@ -22,6 +22,7 @@ class Patient(models.Model):
 
     @property
     def patientFullName(self):
+        return self.ssn
         return '{} {}'.format(self.last_name, self.first_name)
 
     @property
