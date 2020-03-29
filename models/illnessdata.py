@@ -38,7 +38,7 @@ class IllnessData(models.Model):
         ]
         heartRateRanges = [
             {"min": 0, "max": 41, "score": 2},
-            {"min": 41, "max": 46, "score": 1},
+            {"min": 41, "max": 51, "score": 1},
             {"min": 51, "max": 101, "score": 0},
             {"min": 101, "max": 111, "score": 1},
             {"min": 111, "max": 130, "score": 2},
